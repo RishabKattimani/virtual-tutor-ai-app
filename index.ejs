@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Rishab's Virtual Tutor</title>
+        <link rel="stylesheet" href="/styles.css">
+    </head>
+
+    <body>
+        <div class="container">
+            <h1>Rishab's Virtual Tutor</h1>
+
+            <form id="tutor-form">
+
+            <label for="topic">Select Topic:</label>
+            <select id="topic" name="topic">
+            <option value="mathematics">Mathematics</option>
+            <option value="chemistry">Chemistry</option>
+            <option value="history">History</option>
+            <option value="computer-science">Computer Science</option>
+            </select>
+
+            <label for="difficulty">Select Difficulty:</label>
+            <select id="difficulty" name="difficulty">
+            <option value="beginner">Beginner</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+            </select>
+
+            <label for="prior-knowledge">Describe Your Prior Knowledge:</label>
+            <textarea id="prior-knowledge" name="prior-knowledge" rows="4"></textarea>
+
+            <button type="submit">Generate Study Guide</button>
+
+            </form>
+
+            <div id="study-guide"></div>
+        </div>
+    </body>
+    <script>
+        document.getElementById('tutor-form').addEventListener('submit', async (e) => {;
+            e.preventDefault();
+        const topic = document.getElementById('topic').value;
+        const difficulty = document.getElementById('difficulty').value;
+        const priorKnowledge = document.getElementById('prior-knowledge').value;
+
+        try {
+            const response = await fetch('generate-study-guide', {
+                method: 'POST',
+                body: new URLSearchParams({
+                    topic: topic,
+                    difficulty: difficulty,
+                    priorKnowledge: priorKnowledge,
+                }),
+            })
+
+            const data = await response.json();
+            document.getElementById('study-guide').innerText = data.studyGuide;
+        } catch (error) {
+            console.error("coudn't put it on the ejs file")
+        }
+    })
+
+
+    </script>
+</html>
